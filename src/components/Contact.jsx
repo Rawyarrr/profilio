@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { FaPaperPlane, FaEnvelope, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
+import { useLanguage } from '../i18n/LanguageContext';
 
 const Contact = () => {
     const ref = useRef(null);
@@ -9,6 +10,7 @@ const Contact = () => {
     const [formState, setFormState] = useState({ name: '', email: '', message: '' });
     const [focused, setFocused] = useState(null);
     const [status, setStatus] = useState({ submitting: false, submitted: false, error: null });
+    const { t, isRTL } = useLanguage();
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -60,15 +62,17 @@ const Contact = () => {
                 setStatus({ submitting: false, submitted: false, error: data.message || 'Something went wrong!' });
             }
         } catch (error) {
-            setStatus({ submitting: false, submitted: false, error: 'Failed to send message. Please try again.' });
+            setStatus({ submitting: false, submitted: false, error: t('contact.errorMessage') });
         }
     };
 
     const contactInfo = [
-        { icon: <FaEnvelope />, label: "Email", value: "salarrawyar8@gmail.com", href: "mailto:salarrawyar8@gmail.com" },
-        { icon: <FaMapMarkerAlt />, label: "Location", value: "Iraq, Kurdistan", href: null },
-        { icon: <FaPhone />, label: "Phone", value: "+964 750 159 2173", href: "tel:+9647501592173" },
+        { icon: <FaEnvelope />, label: t('contact.email'), value: "salarrawyar8@gmail.com", href: "mailto:salarrawyar8@gmail.com" },
+        { icon: <FaMapMarkerAlt />, label: t('contact.location'), value: t('contact.locationValue'), href: null },
+        { icon: <FaPhone />, label: t('contact.phone'), value: "+964 750 159 2173", href: "tel:+9647501592173" },
     ];
+
+    const labelPosition = isRTL ? 'right-5' : 'left-5';
 
     return (
         <section id="contact" className="section-padding relative overflow-hidden">
@@ -91,23 +95,22 @@ const Contact = () => {
                         <span>04</span>
                     </div>
                     <h2 className="section-title">
-                        Let's Work <span className="gradient-text">Together</span>
+                        {t('contact.sectionTitle1')}<span className="gradient-text">{t('contact.sectionTitle2')}</span>
                     </h2>
                     <p className="text-text-secondary max-w-xl mx-auto mt-4">
-                        Have a project in mind? I'd love to hear about it. Let's create something amazing together.
+                        {t('contact.sectionDesc')}
                     </p>
                 </motion.div>
 
-                <div className="grid lg:grid-cols-5 gap-12">
+                <div className="grid lg:grid-cols-5 gap-8 lg:gap-12">
                     {/* Contact Info */}
                     <motion.div variants={itemVariants} className="lg:col-span-2 space-y-8">
                         <div>
                             <h3 className="text-2xl font-heading font-bold text-white mb-4">
-                                Get in Touch
+                                {t('contact.getInTouch')}
                             </h3>
                             <p className="text-text-secondary leading-relaxed">
-                                I'm currently open to freelance opportunities and exciting collaborations.
-                                Whether you have a question or just want to say hi, my inbox is always open!
+                                {t('contact.contactDesc')}
                             </p>
                         </div>
 
@@ -115,7 +118,7 @@ const Contact = () => {
                             {contactInfo.map((info, i) => (
                                 <motion.div
                                     key={i}
-                                    initial={{ opacity: 0, x: -20 }}
+                                    initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
                                     animate={isInView ? { opacity: 1, x: 0 } : {}}
                                     transition={{ delay: 0.3 + i * 0.1 }}
                                     className="group"
@@ -148,11 +151,7 @@ const Contact = () => {
 
                     {/* Contact Form */}
                     <motion.div variants={itemVariants} className="lg:col-span-3">
-                        <form ref={formRef} onSubmit={handleSubmit} className="premium-card p-8 space-y-6">
-                            {/* Inputs ... */}
-                            {/* ... (previous inputs logic which I am not changing in this block, just the form tag) ... */}
-                            {/* Actually I need to replace the whole form block to be safe or use specific targeted replace */}
-
+                        <form ref={formRef} onSubmit={handleSubmit} className="premium-card p-5 sm:p-8 space-y-5 sm:space-y-6">
                             <div className="grid sm:grid-cols-2 gap-6">
                                 {/* Name Input */}
                                 <div className="relative">
@@ -168,7 +167,8 @@ const Contact = () => {
                                         required
                                     />
                                     <motion.label
-                                        className="absolute left-5 text-text-secondary text-sm pointer-events-none bg-secondary px-2"
+                                        className={`absolute ${labelPosition} text-text-secondary text-sm pointer-events-none px-2`}
+                                        style={{ backgroundColor: 'var(--bg-secondary)' }}
                                         animate={{
                                             top: focused === 'name' || formState.name ? '-8px' : '16px',
                                             fontSize: focused === 'name' || formState.name ? '12px' : '14px',
@@ -176,7 +176,7 @@ const Contact = () => {
                                         }}
                                         transition={{ duration: 0.2 }}
                                     >
-                                        Your Name
+                                        {t('contact.yourName')}
                                     </motion.label>
                                 </div>
 
@@ -194,7 +194,8 @@ const Contact = () => {
                                         required
                                     />
                                     <motion.label
-                                        className="absolute left-5 text-text-secondary text-sm pointer-events-none bg-secondary px-2"
+                                        className={`absolute ${labelPosition} text-text-secondary text-sm pointer-events-none px-2`}
+                                        style={{ backgroundColor: 'var(--bg-secondary)' }}
                                         animate={{
                                             top: focused === 'email' || formState.email ? '-8px' : '16px',
                                             fontSize: focused === 'email' || formState.email ? '12px' : '14px',
@@ -202,7 +203,7 @@ const Contact = () => {
                                         }}
                                         transition={{ duration: 0.2 }}
                                     >
-                                        Email Address
+                                        {t('contact.emailAddress')}
                                     </motion.label>
                                 </div>
                             </div>
@@ -221,7 +222,8 @@ const Contact = () => {
                                     required
                                 />
                                 <motion.label
-                                    className="absolute left-5 text-text-secondary text-sm pointer-events-none bg-secondary px-2"
+                                    className={`absolute ${labelPosition} text-text-secondary text-sm pointer-events-none px-2`}
+                                    style={{ backgroundColor: 'var(--bg-secondary)' }}
                                     animate={{
                                         top: focused === 'message' || formState.message ? '-8px' : '16px',
                                         fontSize: focused === 'message' || formState.message ? '12px' : '14px',
@@ -229,7 +231,7 @@ const Contact = () => {
                                     }}
                                     transition={{ duration: 0.2 }}
                                 >
-                                    Your Message
+                                    {t('contact.yourMessage')}
                                 </motion.label>
                             </div>
 
@@ -242,20 +244,20 @@ const Contact = () => {
                                 disabled={status.submitting}
                             >
                                 {status.submitting ? (
-                                    <span>Sending...</span>
+                                    <span>{t('contact.sending')}</span>
                                 ) : status.submitted ? (
                                     <motion.span
                                         initial={{ opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                     >
-                                        Message Sent! ✓
+                                        {t('contact.messageSent')}
                                     </motion.span>
                                 ) : status.error ? (
                                     <span className="text-red-400">{status.error}</span>
                                 ) : (
                                     <span className="flex items-center gap-2">
                                         <FaPaperPlane />
-                                        Send Message
+                                        {t('contact.sendMessage')}
                                     </span>
                                 )}
                             </motion.button>

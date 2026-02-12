@@ -1,62 +1,73 @@
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { FaReact, FaNodeJs, FaPython, FaDatabase, FaMobile, FaServer } from 'react-icons/fa';
-
-const skillsData = [
-    {
-        title: "Frontend",
-        description: "Building responsive, animated UIs with modern frameworks",
-        icon: <FaReact />,
-        skills: [
-            { name: "React / Next.js", level: 90 },
-            { name: "TypeScript", level: 85 },
-            { name: "Tailwind CSS", level: 95 },
-            { name: "Framer Motion", level: 80 },
-        ],
-        accent: "#10b981"
-    },
-    {
-        title: "Backend",
-        description: "Creating robust APIs and server-side applications",
-        icon: <FaServer />,
-        skills: [
-            { name: "Node.js / Express", level: 85 },
-            { name: "C# / .NET", level: 80 },
-            { name: "Python / Django", level: 75 },
-            { name: "REST / GraphQL", level: 85 },
-        ],
-        accent: "#06b6d4"
-    },
-    {
-        title: "Database",
-        description: "Designing efficient data models and queries",
-        icon: <FaDatabase />,
-        skills: [
-            { name: "PostgreSQL", level: 80 },
-            { name: "MongoDB", level: 85 },
-            { name: "Firebase", level: 90 },
-            { name: "SQL Server", level: 75 },
-        ],
-        accent: "#3b82f6"
-    },
-    {
-        title: "Mobile Development",
-        description: "Building beautiful cross-platform apps with Flutter & Firebase",
-        icon: <FaMobile />,
-        skills: [
-            { name: "Flutter", level: 95 },
-            { name: "Dart", level: 90 },
-            { name: "Firebase / Firestore", level: 90 },
-            { name: "Firebase Auth", level: 85 },
-        ],
-        accent: "#f59e0b"
-    },
-];
+import { FaReact, FaDatabase, FaMobile, FaServer } from 'react-icons/fa';
+import {
+    SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiFramer,
+    SiNodedotjs, SiDotnet, SiPython, SiDjango, SiGraphql,
+    SiPostgresql, SiMongodb, SiFirebase,
+    SiFlutter, SiDart,
+    SiGit, SiFigma, SiAndroidstudio
+} from 'react-icons/si';
+import { DiMsqlServer } from 'react-icons/di';
+import { VscCode } from 'react-icons/vsc';
+import { useLanguage } from '../i18n/LanguageContext';
 
 const Skills = () => {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-100px" });
     const [hoveredSkill, setHoveredSkill] = useState(null);
+    const { t } = useLanguage();
+
+    const skillsData = [
+        {
+            title: t('skills.frontend'),
+            description: t('skills.frontendDesc'),
+            icon: <FaReact />,
+            skills: [
+                { name: "React / Next.js", level: 90, icon: <SiReact /> },
+                { name: "TypeScript", level: 85, icon: <SiTypescript /> },
+                { name: "Tailwind CSS", level: 95, icon: <SiTailwindcss /> },
+                { name: "Framer Motion", level: 80, icon: <SiFramer /> },
+            ],
+            accent: "#10b981"
+        },
+        {
+            title: t('skills.backend'),
+            description: t('skills.backendDesc'),
+            icon: <FaServer />,
+            skills: [
+                { name: "Node.js / Express", level: 85, icon: <SiNodedotjs /> },
+                { name: "C# / .NET", level: 80, icon: <SiDotnet /> },
+                { name: "Python / Django", level: 75, icon: <SiPython /> },
+                { name: "REST / GraphQL", level: 85, icon: <SiGraphql /> },
+            ],
+            accent: "#06b6d4"
+        },
+        {
+            title: t('skills.database'),
+            description: t('skills.databaseDesc'),
+            icon: <FaDatabase />,
+            skills: [
+                { name: "PostgreSQL", level: 80, icon: <SiPostgresql /> },
+                { name: "MongoDB", level: 85, icon: <SiMongodb /> },
+                { name: "Firebase", level: 90, icon: <SiFirebase /> },
+                { name: "SQL Server", level: 75, icon: <DiMsqlServer /> },
+            ],
+            accent: "#3b82f6"
+        },
+        {
+            title: t('skills.mobile'),
+            description: t('skills.mobileDesc'),
+            icon: <FaMobile />,
+            skills: [
+                { name: "Flutter", level: 95, icon: <SiFlutter /> },
+                { name: "Dart", level: 90, icon: <SiDart /> },
+                { name: "Firebase / Firestore", level: 90, icon: <SiFirebase /> },
+                { name: "Firebase Auth", level: 85, icon: <SiFirebase /> },
+            ],
+            accent: "#f59e0b"
+        },
+    ];
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -102,22 +113,22 @@ const Skills = () => {
                         <span>02</span>
                     </div>
                     <h2 className="section-title">
-                        Skills & <span className="gradient-text">Expertise</span>
+                        {t('skills.sectionTitle1')}<span className="gradient-text">{t('skills.sectionTitle2')}</span>
                     </h2>
                     <p className="text-text-secondary max-w-xl mx-auto mt-4">
-                        Technologies and tools I use to bring ideas to life
+                        {t('skills.sectionDesc')}
                     </p>
                 </motion.div>
 
                 {/* Skills Grid */}
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                     {skillsData.map((category, i) => (
                         <motion.div
                             key={i}
                             variants={cardVariants}
                             onMouseEnter={() => setHoveredSkill(i)}
                             onMouseLeave={() => setHoveredSkill(null)}
-                            className="premium-card p-8 group"
+                            className="premium-card p-5 sm:p-8 group"
                         >
                             {/* Header */}
                             <div className="flex items-start gap-4 mb-6">
@@ -148,7 +159,10 @@ const Skills = () => {
                                 {category.skills.map((skill, j) => (
                                     <div key={j}>
                                         <div className="flex justify-between text-sm mb-1.5">
-                                            <span className="text-text-secondary">{skill.name}</span>
+                                            <span className="text-text-secondary flex items-center gap-2">
+                                                {skill.icon && <span style={{ color: category.accent }}>{skill.icon}</span>}
+                                                {skill.name}
+                                            </span>
                                             <motion.span
                                                 initial={{ opacity: 0 }}
                                                 animate={isInView ? { opacity: 1 } : {}}
@@ -184,18 +198,26 @@ const Skills = () => {
 
                 {/* Additional Tools */}
                 <motion.div variants={cardVariants} className="mt-12 text-center">
-                    <p className="text-text-secondary mb-6">Also experienced with</p>
-                    <div className="flex flex-wrap justify-center gap-4">
-                        {['Firebase Cloud Functions', 'REST APIs', 'Git', 'Figma', 'VS Code', 'Android Studio'].map((tool, i) => (
+                    <p className="text-text-secondary mb-6">{t('skills.alsoExperienced')}</p>
+                    <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
+                        {[
+                            { name: 'Firebase Cloud Functions', icon: <SiFirebase /> },
+                            { name: 'REST APIs', icon: <SiGraphql /> },
+                            { name: 'Git', icon: <SiGit /> },
+                            { name: 'Figma', icon: <SiFigma /> },
+                            { name: 'VS Code', icon: <VscCode /> },
+                            { name: 'Android Studio', icon: <SiAndroidstudio /> },
+                        ].map((tool, i) => (
                             <motion.span
                                 key={i}
                                 initial={{ opacity: 0, scale: 0.8 }}
                                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
                                 transition={{ delay: 0.8 + i * 0.05 }}
                                 whileHover={{ scale: 1.1, y: -2 }}
-                                className="px-4 py-2 glass rounded-full text-sm text-text-secondary hover:text-accent transition-colors"
+                                className="px-3 sm:px-4 py-1.5 sm:py-2 glass rounded-full text-xs sm:text-sm text-text-secondary hover:text-accent transition-colors flex items-center gap-1.5 sm:gap-2"
                             >
-                                {tool}
+                                <span className="text-accent">{tool.icon}</span>
+                                {tool.name}
                             </motion.span>
                         ))}
                     </div>

@@ -1,75 +1,84 @@
 import { useState, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { FaGithub, FaExternalLinkAlt, FaArrowRight } from 'react-icons/fa';
-
-const projectsData = [
-    {
-        id: 1,
-        title: "Kurd Cut",
-        category: "Mobile",
-        description: "Barber and salon booking application with real-time features, interactive maps, push notifications, appointment management, and seamless user experience for customers and barbers.",
-        image: "/img/kurdcut.png",
-        techs: ["Flutter", "Dart", "Firebase", "REST APIs"],
-        links: { github: "#", live: "#" },
-        color: "#f59e0b"
-    },
-    {
-        id: 2,
-        title: "Coffee shop Management System",
-        category: "Desktop",
-        description: "Comprehensive desktop application for managing coffee shop, borrower records, and automated due date reminders with reporting features.",
-        image: "/img/cafe.png",
-        techs: ["java", "JavaFX", "MySQL"],
-        links: { github: "#", live: null },
-        color: "#06b6d4"
-    },
-    {
-        id: 3,
-        title: "Institute Management System",
-        category: "Web",
-        description: "Comprehensive web application for managing institute records, student information, and automated due date reminders with reporting features.",
-        image: "/img/institute.png",
-        techs: ["React", "Node.js", "MongoDB", "Express.js"],
-        links: { github: "#", live: "#" },
-        color: "#3b82f6"
-    },
-    {
-        id: 4,
-        title: "Weather Dashboard",
-        category: "Web",
-        description: "Real-time weather tracking with beautiful visualizations, 7-day forecasts, and location-based weather alerts.",
-        image: "/img/weather.webp",
-        techs: ["React", "API", "Chart.js"],
-        links: { github: "#", live: "#" },
-        color: "#f59e0b"
-    },
-    {
-        id: 5,
-        title: "Supermarket Management System",
-        category: "Desktop",
-        description: "Comprehensive desktop application for managing supermarket inventory, sales tracking, and automated reporting features.",
-        image: "/img/market.png",
-        techs: ["C#", ".NET", "SQL Server", "WPF"],
-        links: { github: "#", live: null },
-        color: "#ec4899"
-    },
-    {
-        id: 6,
-        title: "Portfolio Website",
-        category: "Web",
-        description: "Modern personal portfolio showcasing projects and skills with smooth animations and responsive design.",
-        image: "/img/portfolio.png",
-        techs: ["React", "Framer Motion", "Tailwind"],
-        links: { github: "#", live: "#" },
-        color: "#8b5cf6"
-    }
-];
+import { useLanguage } from '../i18n/LanguageContext';
 
 const Projects = () => {
     const [filter, setFilter] = useState('All');
     const [hoveredId, setHoveredId] = useState(null);
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-100px" });
+    const { t, isRTL } = useLanguage();
+
+    const projectsData = [
+        {
+            id: 1,
+            title: "Kurd Cut",
+            category: "Mobile",
+            descKey: "projects.kurdcut",
+            image: "/img/kurdcut.png",
+            techs: ["Flutter", "Dart", "Firebase", "REST APIs"],
+            links: { github: "https://github.com/Rawyarrr", live: "#" },
+            color: "#f59e0b"
+        },
+        {
+            id: 2,
+            title: "Coffee shop Management System",
+            category: "Desktop",
+            descKey: "projects.coffeeShop",
+            image: "/img/cafe.png",
+            techs: ["java", "JavaFX", "MySQL"],
+            links: { github: "https://github.com/Rawyarrr", live: null },
+            color: "#06b6d4"
+        },
+        {
+            id: 3,
+            title: "Institute Management System",
+            category: "Web",
+            descKey: "projects.institute",
+            image: "/img/institute.png",
+            techs: ["React", "Node.js", "MongoDB", "Express.js"],
+            links: { github: "https://github.com/Rawyarrr", live: "#" },
+            color: "#3b82f6"
+        },
+        {
+            id: 4,
+            title: "Weather Dashboard",
+            category: "Web",
+            descKey: "projects.weather",
+            image: "/img/weather.webp",
+            techs: ["React", "API", "Chart.js"],
+            links: { github: "https://github.com/Rawyarrr", live: "#" },
+            color: "#f59e0b"
+        },
+        {
+            id: 5,
+            title: "Supermarket Management System",
+            category: "Desktop",
+            descKey: "projects.supermarket",
+            image: "/img/market.png",
+            techs: ["C#", ".NET", "SQL Server", "WPF"],
+            links: { github: "https://github.com/Rawyarrr", live: null },
+            color: "#ec4899"
+        },
+        {
+            id: 6,
+            title: "Portfolio Website",
+            category: "Web",
+            descKey: "projects.portfolio",
+            image: "/img/portfolio.png",
+            techs: ["React", "Framer Motion", "Tailwind"],
+            links: { github: "https://github.com/Rawyarrr", live: "#" },
+            color: "#8b5cf6"
+        }
+    ];
+
+    const categoryMap = {
+        'All': t('projects.all'),
+        'Mobile': t('projects.mobile'),
+        'Web': t('projects.web'),
+        'Desktop': t('projects.desktop'),
+    };
 
     const categories = ["All", "Mobile", "Web", "Desktop"];
     const filteredProjects = filter === 'All' ? projectsData : projectsData.filter(p => p.category === filter);
@@ -109,20 +118,20 @@ const Projects = () => {
                         <span>03</span>
                     </div>
                     <h2 className="section-title">
-                        Featured <span className="gradient-text">Projects</span>
+                        {t('projects.sectionTitle1')}<span className="gradient-text">{t('projects.sectionTitle2')}</span>
                     </h2>
                     <p className="text-text-secondary max-w-xl mx-auto mt-4">
-                        Some things I've built with love and dedication
+                        {t('projects.sectionDesc')}
                     </p>
                 </motion.div>
 
                 {/* Filter Tabs */}
-                <motion.div variants={cardVariants} className="flex justify-center gap-2 mb-12">
+                <motion.div variants={cardVariants} className="flex flex-wrap justify-center gap-2 mb-8 sm:mb-12 px-2">
                     {categories.map((cat) => (
                         <motion.button
                             key={cat}
                             onClick={() => setFilter(cat)}
-                            className={`relative px-6 py-2.5 font-mono text-sm rounded-full transition-all duration-300 overflow-hidden ${filter === cat
+                            className={`relative px-4 sm:px-6 py-2 sm:py-2.5 font-mono text-xs sm:text-sm rounded-full transition-all duration-300 overflow-hidden ${filter === cat
                                 ? 'text-primary'
                                 : 'text-text-secondary hover:text-white border border-border-color'
                                 }`}
@@ -136,13 +145,13 @@ const Projects = () => {
                                     transition={{ type: 'spring', duration: 0.5 }}
                                 />
                             )}
-                            <span className="relative z-10">{cat}</span>
+                            <span className="relative z-10">{categoryMap[cat]}</span>
                         </motion.button>
                     ))}
                 </motion.div>
 
                 {/* Projects Grid */}
-                <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                     <AnimatePresence mode="popLayout">
                         {filteredProjects.map((project) => (
                             <motion.div
@@ -157,8 +166,7 @@ const Projects = () => {
                                 className="premium-card group relative"
                             >
                                 {/* Image Area */}
-                                <div className="relative h-48 overflow-hidden rounded-t-2xl">
-                                    {/* Actual Image or Gradient Placeholder */}
+                                <div className="relative h-40 sm:h-48 overflow-hidden rounded-t-2xl">
                                     {project.image ? (
                                         <img
                                             src={project.image}
@@ -171,7 +179,6 @@ const Projects = () => {
                                             style={{ background: `linear-gradient(135deg, ${project.color}40, ${project.color}10)` }}
                                         />
                                     )}
-                                    {/* Overlay */}
                                     <div className="absolute inset-0 bg-gradient-to-t from-secondary via-secondary/50 to-transparent z-10"></div>
                                     <motion.div
                                         animate={{
@@ -184,7 +191,7 @@ const Projects = () => {
                                     />
 
                                     {/* Project Number */}
-                                    <div className="absolute top-4 left-4 z-20">
+                                    <div className={`absolute top-4 ${isRTL ? 'right-4' : 'left-4'} z-20`}>
                                         <span className="text-5xl font-heading font-bold opacity-20" style={{ color: project.color }}>
                                             0{project.id}
                                         </span>
@@ -192,7 +199,7 @@ const Projects = () => {
 
                                     {/* Links */}
                                     <motion.div
-                                        className="absolute top-4 right-4 z-20 flex gap-3"
+                                        className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} z-20 flex gap-3`}
                                         initial={{ opacity: 0, y: -10 }}
                                         animate={{ opacity: hoveredId === project.id ? 1 : 0, y: hoveredId === project.id ? 0 : -10 }}
                                         transition={{ duration: 0.3 }}
@@ -225,7 +232,7 @@ const Projects = () => {
                                             className="px-3 py-1 text-xs font-mono rounded-full"
                                             style={{ background: `${project.color}20`, color: project.color }}
                                         >
-                                            {project.category}
+                                            {categoryMap[project.category]}
                                         </span>
                                     </div>
 
@@ -234,7 +241,7 @@ const Projects = () => {
                                     </h3>
 
                                     <p className="text-text-secondary text-sm leading-relaxed mb-4 line-clamp-2">
-                                        {project.description}
+                                        {t(project.descKey)}
                                     </p>
 
                                     {/* Tech Stack */}
@@ -246,15 +253,6 @@ const Projects = () => {
                                         ))}
                                     </div>
 
-                                    {/* View More */}
-                                    <motion.div
-                                        className="flex items-center gap-2 text-sm font-medium text-accent opacity-0 group-hover:opacity-100 transition-opacity"
-                                    >
-                                        <span>View Details</span>
-                                        <motion.span animate={{ x: hoveredId === project.id ? 5 : 0 }}>
-                                            <FaArrowRight size={12} />
-                                        </motion.span>
-                                    </motion.div>
                                 </div>
 
                                 {/* Top Gradient Line */}
@@ -281,7 +279,7 @@ const Projects = () => {
                         whileTap={{ scale: 0.95 }}
                     >
                         <FaGithub size={18} />
-                        <span>See More on GitHub</span>
+                        <span>{t('projects.seeMoreGithub')}</span>
                     </motion.a>
                 </motion.div>
             </motion.div>

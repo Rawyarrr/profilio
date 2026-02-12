@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
+import { useLanguage } from '../i18n/LanguageContext';
 
 const Loader = () => {
+    const { t } = useLanguage();
     const name = "RAWYAR";
     const subtitle = "SALAR";
 
@@ -80,7 +82,7 @@ const Loader = () => {
                 transition={{ delay: 1.5 }}
                 className="absolute bottom-12 left-0 right-0 text-center text-text-secondary font-mono text-sm tracking-widest"
             >
-                SOFTWARE ENGINEER
+                {t('loader.tagline')}
             </motion.p>
         </motion.div>
     );

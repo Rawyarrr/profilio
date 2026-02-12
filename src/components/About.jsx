@@ -1,10 +1,18 @@
 import { useRef } from 'react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import {
+    SiFlutter, SiDart, SiFirebase, SiReact, SiNextdotjs,
+    SiNodedotjs, SiDotnet, SiPython,
+    SiMongodb, SiGit, SiGithub
+} from 'react-icons/si';
+import { DiMsqlServer } from 'react-icons/di';
+import { useLanguage } from '../i18n/LanguageContext';
 
 const About = () => {
     const ref = useRef(null);
     const imageRef = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-100px" });
+    const { t } = useLanguage();
 
     const { scrollYProgress } = useScroll({
         target: imageRef,
@@ -31,14 +39,19 @@ const About = () => {
     };
 
     const techs = [
-        "Flutter / Dart", "Firebase / Firestore", "React / Next.js",
-        "Node.js / Express", "C# / .NET Core", "Python",
-        "SQL / MongoDB", "Git / GitHub"
+        { name: "Flutter / Dart", icon: <SiFlutter /> },
+        { name: "Firebase / Firestore", icon: <SiFirebase /> },
+        { name: "React / Next.js", icon: <SiReact /> },
+        { name: "Node.js / Express", icon: <SiNodedotjs /> },
+        { name: "C# / .NET Core", icon: <SiDotnet /> },
+        { name: "Python", icon: <SiPython /> },
+        { name: "SQL / MongoDB", icon: <SiMongodb /> },
+        { name: "Git / GitHub", icon: <SiGit /> },
     ];
 
     const stats = [
-        { number: "3+", label: "Years Experience" },
-        { number: "30+", label: "Projects Completed" },
+        { number: "3+", label: t('about.yearsExp') },
+        { number: "30+", label: t('about.projectsCompleted') },
     ];
 
     return (
@@ -60,34 +73,32 @@ const About = () => {
                         <span>01</span>
                     </div>
                     <h2 className="section-title">
-                        About <span className="gradient-text">Me</span>
+                        {t('about.sectionTitle1')}<span className="gradient-text">{t('about.sectionTitle2')}</span>
                     </h2>
                 </motion.div>
 
-                <div className="grid lg:grid-cols-5 gap-16 items-start">
+                <div className="grid lg:grid-cols-5 gap-8 lg:gap-16 items-start">
                     {/* Text Content */}
                     <div className="lg:col-span-3 space-y-8">
-                        <motion.p variants={itemVariants} className="text-text-secondary text-lg leading-relaxed">
-                            Hello! I'm <span className="text-white font-semibold">Rawyar</span>, a passionate
-                            <span className="text-accent"> Software Engineer</span> and
-                            <span className="text-cyan"> Computer Science student</span> based in Kurdistan/Sulaymaniyah.
-                            I love creating digital solutions that blend beautiful design with robust functionality.
+                        <motion.p variants={itemVariants} className="text-text-secondary text-base sm:text-lg leading-relaxed">
+                            {t('about.bio1Start')}<span className="text-white font-semibold">{t('about.bio1Name')}</span>{t('about.bio1Mid')}
+                            <span className="text-accent">{t('about.bio1Role1')}</span>{t('about.bio1And')}
+                            <span className="text-cyan">{t('about.bio1Role2')}</span>{t('about.bio1End')}
                         </motion.p>
 
-                        <motion.p variants={itemVariants} className="text-text-secondary text-lg leading-relaxed">
-                            My journey into programming began during university, and I've since built everything from
-                            <span className="text-white"> cross-platform mobile apps</span> and
-                            <span className="text-white"> full-stack web applications</span>. I specialize in
-                            building beautiful, performant apps<span className="text-cyan"></span> .
+                        <motion.p variants={itemVariants} className="text-text-secondary text-base sm:text-lg leading-relaxed">
+                            {t('about.bio2Start')}
+                            <span className="text-white">{t('about.bio2Mobile')}</span>{t('about.bio2And')}
+                            <span className="text-white">{t('about.bio2Web')}</span>{t('about.bio2End')}<span className="text-cyan"></span> .
                         </motion.p>
 
                         {/* Tech Stack */}
                         <motion.div variants={itemVariants}>
                             <p className="text-white font-medium mb-4 flex items-center gap-2">
                                 <span className="w-6 h-px bg-accent"></span>
-                                Technologies I work with
+                                {t('about.techTitle')}
                             </p>
-                            <ul className="grid grid-cols-2 gap-3">
+                            <ul className="grid grid-cols-1 xs:grid-cols-2 gap-3">
                                 {techs.map((tech, i) => (
                                     <motion.li
                                         key={i}
@@ -96,8 +107,8 @@ const About = () => {
                                         transition={{ delay: 0.4 + i * 0.05 }}
                                         className="flex items-center gap-2 text-text-secondary text-sm"
                                     >
-                                        <span className="text-accent text-xs">▹</span>
-                                        {tech}
+                                        <span className="text-accent text-base">{tech.icon}</span>
+                                        {tech.name}
                                     </motion.li>
                                 ))}
                             </ul>
@@ -106,7 +117,7 @@ const About = () => {
                         {/* Stats */}
                         <motion.div
                             variants={itemVariants}
-                            className="flex gap-8 pt-4"
+                            className="flex gap-6 sm:gap-8 pt-4"
                         >
                             {stats.map((stat, i) => (
                                 <motion.div

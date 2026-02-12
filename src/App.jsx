@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { LanguageProvider } from './i18n/LanguageContext';
+import { ThemeProvider } from './i18n/ThemeContext';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -32,43 +34,45 @@ function App() {
   }, []);
 
   return (
-    <>
-      {/* Loading Screen */}
-      <AnimatePresence>
-        {isLoading && <Loader />}
-      </AnimatePresence>
+    <ThemeProvider>
+      <LanguageProvider>
+        {/* Loading Screen */}
+        <AnimatePresence>
+          {isLoading && <Loader />}
+        </AnimatePresence>
 
-      {/* Custom Cursor */}
-      <Cursor />
+        {/* Custom Cursor */}
+        <Cursor />
 
-      {/* Noise Overlay */}
-      <div className="noise-overlay"></div>
+        {/* Noise Overlay */}
+        <div className="noise-overlay"></div>
 
-      {/* Scroll Progress Bar */}
-      <div className="scroll-progress">
+        {/* Scroll Progress Bar */}
+        <div className="scroll-progress">
+          <motion.div
+            className="scroll-progress-bar"
+            style={{ scaleX: scrollProgress / 100 }}
+          />
+        </div>
+
+        {/* Main Content */}
         <motion.div
-          className="scroll-progress-bar"
-          style={{ scaleX: scrollProgress / 100 }}
-        />
-      </div>
-
-      {/* Main Content */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isLoading ? 0 : 1 }}
-        transition={{ duration: 0.5, delay: 0.3 }}
-      >
-        <Navbar />
-        <main>
-          <Hero />
-          <About />
-          <Skills />
-          <Projects />
-          <Contact />
-        </main>
-        <Footer />
-      </motion.div>
-    </>
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isLoading ? 0 : 1 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <Navbar />
+          <main>
+            <Hero />
+            <About />
+            <Skills />
+            <Projects />
+            <Contact />
+          </main>
+          <Footer />
+        </motion.div>
+      </LanguageProvider>
+    </ThemeProvider>
   );
 }
 

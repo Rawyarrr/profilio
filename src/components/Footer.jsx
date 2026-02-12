@@ -1,7 +1,10 @@
 import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaInstagram, FaHeart, FaFacebook } from 'react-icons/fa';
+import { useLanguage } from '../i18n/LanguageContext';
 
 const Footer = () => {
+    const { t } = useLanguage();
+
     const socials = [
         { icon: <FaGithub />, href: "https://github.com/Rawyarrr", label: "GitHub" },
         { icon: <FaLinkedin />, href: "https://www.linkedin.com/in/rawyar-salar-06468b347/", label: "LinkedIn" },
@@ -10,15 +13,15 @@ const Footer = () => {
     ];
 
     const quickLinks = [
-        { name: "Home", href: "#home" },
-        { name: "About", href: "#about" },
-        { name: "Skills", href: "#skills" },
-        { name: "Projects", href: "#projects" },
-        { name: "Contact", href: "#contact" },
+        { name: t('nav.home'), href: "#home" },
+        { name: t('nav.about'), href: "#about" },
+        { name: t('nav.skills'), href: "#skills" },
+        { name: t('nav.projects'), href: "#projects" },
+        { name: t('nav.contact'), href: "#contact" },
     ];
 
     return (
-        <footer className="relative pt-20 pb-8">
+        <footer className="relative pt-12 sm:pt-20 pb-6 sm:pb-8">
             {/* Top Decoration */}
             <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent"></div>
 
@@ -26,7 +29,7 @@ const Footer = () => {
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-48 bg-accent/5 blur-3xl pointer-events-none"></div>
 
             <div className="max-w-6xl mx-auto px-6 relative z-10">
-                <div className="grid md:grid-cols-3 gap-12 mb-16">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-12 mb-12 sm:mb-16">
                     {/* Brand */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -42,8 +45,7 @@ const Footer = () => {
                             </span>
                         </a>
                         <p className="text-text-secondary text-sm leading-relaxed">
-                            Software Engineer crafting beautiful digital experiences.
-                            Available for freelance projects and collaborations.
+                            {t('footer.tagline')}
                         </p>
                     </motion.div>
 
@@ -54,7 +56,7 @@ const Footer = () => {
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
                     >
-                        <h4 className="text-white font-heading font-bold mb-4">Quick Links</h4>
+                        <h4 className="text-white font-heading font-bold mb-4">{t('footer.quickLinks')}</h4>
                         <ul className="space-y-2">
                             {quickLinks.map((link, i) => (
                                 <li key={i}>
@@ -76,9 +78,9 @@ const Footer = () => {
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
                     >
-                        <h4 className="text-white font-heading font-bold mb-4">Get in Touch</h4>
+                        <h4 className="text-white font-heading font-bold mb-4">{t('footer.getInTouch')}</h4>
                         <p className="text-text-secondary text-sm mb-4">
-                            Feel free to reach out for collaborations or just a friendly hello!
+                            {t('footer.footerContact')}
                         </p>
                         <a
                             href="mailto:salarrawyar8@gmail.com"
@@ -123,7 +125,7 @@ const Footer = () => {
                         viewport={{ once: true }}
                         className="text-text-secondary text-sm font-mono"
                     >
-                        © {new Date().getFullYear()} • Built by <span className="text-accent">Rawyar Salar</span>
+                        © {new Date().getFullYear()} • {t('footer.builtBy')} <span className="text-accent">Rawyar Salar</span>
                     </motion.p>
                 </div>
 
