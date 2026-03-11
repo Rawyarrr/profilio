@@ -55,6 +55,8 @@ const Hero = () => {
 
     useEffect(() => {
         const handleMouseMove = (e) => {
+            // Only capture mouse on non-touch devices
+            if (window.matchMedia("(pointer: coarse)").matches) return;
             const { clientX, clientY } = e;
             const { innerWidth, innerHeight } = window;
             mouseX.set(clientX / innerWidth);
@@ -78,7 +80,7 @@ const Hero = () => {
         visible: {
             opacity: 1,
             y: 0,
-            transition: { duration: 1, ease: [0.22, 1, 0.36, 1] }
+            transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] } // refined cinematic bezier curve
         }
     };
 
@@ -108,25 +110,25 @@ const Hero = () => {
                 }}
             />
 
-            {/* Geometric Decorations */}
+            {/* Geometric Decorations (Hidden on Mobile) */}
             <motion.div
                 style={{ x: parallaxX, y: parallaxY }}
-                className="absolute top-20 left-10 w-16 sm:w-24 md:w-32 h-16 sm:h-24 md:h-32 border border-accent/20 rounded-full geo-circle"
+                className="absolute top-20 left-10 w-16 md:w-32 h-16 md:h-32 border border-accent/20 rounded-full geo-circle hidden md:block"
             />
             <motion.div
                 style={{ x: useTransform(parallaxX, v => -v), y: useTransform(parallaxY, v => -v) }}
-                className="absolute bottom-32 right-20 w-12 sm:w-18 md:w-24 h-12 sm:h-18 md:h-24 border border-cyan/20 geo-square rotate-45"
+                className="absolute bottom-32 right-20 w-12 md:w-24 h-12 md:h-24 border border-cyan/20 geo-square rotate-45 hidden md:block"
             />
             <motion.div
-                className="absolute top-1/3 right-1/4 w-3 h-3 bg-accent rounded-full float-medium"
+                className="absolute top-1/3 right-1/4 w-3 h-3 bg-accent rounded-full float-medium hidden md:block"
             />
             <motion.div
-                className="absolute bottom-1/3 left-1/4 w-2 h-2 bg-cyan rounded-full float-slow"
+                className="absolute bottom-1/3 left-1/4 w-2 h-2 bg-cyan rounded-full float-slow hidden md:block"
             />
 
-            {/* Mouse Glow */}
+            {/* Mouse Glow (Hidden on Mobile) */}
             <motion.div
-                className="fixed w-[600px] h-[600px] rounded-full pointer-events-none z-0"
+                className="hidden md:block fixed w-[600px] h-[600px] rounded-full pointer-events-none z-0"
                 animate={{
                     x: mousePosition.x - 300,
                     y: mousePosition.y - 300,
@@ -153,14 +155,14 @@ const Hero = () => {
                 </motion.div>
 
                 {/* Name */}
-                <motion.div variants={itemVariants} className="overflow-hidden mb-4">
-                    <h1 className="text-5xl xs:text-6xl sm:text-8xl md:text-9xl font-heading font-bold tracking-tighter">
+                <motion.div variants={itemVariants} className="overflow-hidden mb-2 sm:mb-4">
+                    <h1 className="text-4xl xs:text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-heading font-bold tracking-tighter">
                         <span className="shimmer-text">{name}</span>
                     </h1>
                 </motion.div>
 
-                <motion.div variants={itemVariants} className="overflow-hidden mb-8">
-                    <h1 className="text-4xl xs:text-5xl sm:text-7xl md:text-8xl font-heading font-bold tracking-tighter text-text-secondary">
+                <motion.div variants={itemVariants} className="overflow-hidden mb-6 sm:mb-8">
+                    <h1 className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-heading font-bold tracking-tighter text-text-secondary">
                         {lastName}
                     </h1>
                 </motion.div>

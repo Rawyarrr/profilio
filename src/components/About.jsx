@@ -19,7 +19,7 @@ const About = () => {
         offset: ["start end", "end start"]
     });
 
-    const imageY = useTransform(scrollYProgress, [0, 1], [50, -50]);
+    const imageY = useTransform(scrollYProgress, [0, 1], [30, -30]);
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -30,11 +30,11 @@ const About = () => {
     };
 
     const itemVariants = {
-        hidden: { opacity: 0, y: 50 },
+        hidden: { opacity: 0, y: 30 },
         visible: {
             opacity: 1,
             y: 0,
-            transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
+            transition: { duration: 0.8, ease: "easeOut" }
         }
     };
 
@@ -58,13 +58,14 @@ const About = () => {
         <section id="about" className="section-padding relative overflow-hidden">
             {/* Background */}
             <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-accent/5 to-transparent pointer-events-none"></div>
-            <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan/5 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-0 left-0 w-96 max-w-full h-96 bg-cyan/5 rounded-full blur-3xl pointer-events-none"></div>
 
             <motion.div
                 ref={ref}
                 variants={containerVariants}
                 initial="hidden"
-                animate={isInView ? "visible" : "hidden"}
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.1 }}
                 className="max-w-6xl mx-auto px-6"
             >
                 {/* Section Header */}
@@ -77,7 +78,7 @@ const About = () => {
                     </h2>
                 </motion.div>
 
-                <div className="grid lg:grid-cols-5 gap-8 lg:gap-16 items-start">
+                <div className="grid lg:grid-cols-5 gap-10 sm:gap-12 lg:gap-16 items-start">
                     {/* Text Content */}
                     <div className="lg:col-span-3 space-y-8">
                         <motion.p variants={itemVariants} className="text-text-secondary text-base sm:text-lg leading-relaxed">
@@ -142,7 +143,7 @@ const About = () => {
                     <motion.div
                         ref={imageRef}
                         variants={itemVariants}
-                        className="lg:col-span-2 relative"
+                        className="lg:col-span-2 relative mt-8 lg:mt-0"
                     >
                         <motion.div style={{ y: imageY }} className="relative">
                             {/* Decorative Elements */}

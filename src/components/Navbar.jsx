@@ -236,7 +236,7 @@ const Navbar = () => {
                             transition={{ type: 'tween', duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                             className={`fixed top-0 ${isRTL ? 'left-0' : 'right-0'} w-4/5 max-w-sm h-screen glass-strong flex flex-col z-50`}
                         >
-                            <div className="flex-1 flex flex-col justify-center px-6 sm:px-8 gap-4 sm:gap-6">
+                            <div className="flex-1 flex flex-col justify-center px-6 sm:px-8 gap-4 sm:gap-6 mt-16">
                                 {navLinks.map((link, i) => (
                                     <motion.a
                                         key={link.href}

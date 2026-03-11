@@ -6,7 +6,6 @@ import { useLanguage } from '../i18n/LanguageContext';
 const Contact = () => {
     const ref = useRef(null);
     const formRef = useRef(null);
-    const isInView = useInView(ref, { once: true, margin: "-100px" });
     const [formState, setFormState] = useState({ name: '', email: '', message: '' });
     const [focused, setFocused] = useState(null);
     const [status, setStatus] = useState({ submitting: false, submitted: false, error: null });
@@ -21,11 +20,11 @@ const Contact = () => {
     };
 
     const itemVariants = {
-        hidden: { opacity: 0, y: 50 },
+        hidden: { opacity: 0, y: 30 },
         visible: {
             opacity: 1,
             y: 0,
-            transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
+            transition: { duration: 0.8, ease: "easeOut" }
         }
     };
 
@@ -77,16 +76,17 @@ const Contact = () => {
     return (
         <section id="contact" className="section-padding relative overflow-hidden">
             {/* Background Elements */}
-            <div className="absolute top-0 left-0 w-full h-full">
-                <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
-                <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-cyan/10 rounded-full blur-3xl"></div>
+            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+                <div className="absolute top-1/4 right-1/4 w-96 max-w-full h-96 bg-accent/10 rounded-full blur-3xl"></div>
+                <div className="absolute bottom-1/4 left-1/4 w-96 max-w-full h-96 bg-cyan/10 rounded-full blur-3xl"></div>
             </div>
 
             <motion.div
                 ref={ref}
                 variants={containerVariants}
                 initial="hidden"
-                animate={isInView ? "visible" : "hidden"}
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.1 }}
                 className="max-w-6xl mx-auto px-6 relative z-10"
             >
                 {/* Section Header */}
@@ -118,9 +118,7 @@ const Contact = () => {
                             {contactInfo.map((info, i) => (
                                 <motion.div
                                     key={i}
-                                    initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
-                                    animate={isInView ? { opacity: 1, x: 0 } : {}}
-                                    transition={{ delay: 0.3 + i * 0.1 }}
+                                    variants={itemVariants}
                                     className="group"
                                 >
                                     {info.href ? (

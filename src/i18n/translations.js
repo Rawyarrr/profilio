@@ -82,6 +82,7 @@ const translations = {
             weather: "Real-time weather tracking with beautiful visualizations, 7-day forecasts, and location-based weather alerts.",
             supermarket: "Comprehensive desktop application for managing supermarket inventory, sales tracking, and automated reporting features.",
             portfolio: "Modern personal portfolio showcasing projects and skills with smooth animations and responsive design.",
+            kurdcutweb: "Official website for Kurd Cut, a booking application for barbers and salons.",
         },
 
         // Contact
@@ -195,6 +196,7 @@ const translations = {
             weather: "تتبع الطقس في الوقت الفعلي مع تصورات جميلة، توقعات لـ 7 أيام، وتنبيهات الطقس حسب الموقع.",
             supermarket: "تطبيق سطح مكتب شامل لإدارة مخزون السوبرماركت، تتبع المبيعات، وميزات التقارير التلقائية.",
             portfolio: "موقع بورتفوليو شخصي حديث يعرض المشاريع والمهارات مع رسوم متحركة سلسة وتصميم متجاوب.",
+            kurdcutweb: "الموقع الرسمي لـ Kurd Cut، تطبيق حجز لصالونات الحلاقة.",
         },
 
         contact: {
@@ -305,6 +307,7 @@ const translations = {
             weather: "چاودێریکردنی کەشوهەوا بە ڕاستەوخۆ بە بینینی جوان، پێشبینی ٧ ڕۆژ، و ئاگادارکردنەوەی کەشوهەوا بەپێی شوێن.",
             supermarket: "بەرنامەی دێسکتۆپی گشتگیر بۆ بەڕێوەبردنی کۆگای سوپەرمارکێت، چاودێری فرۆشتن، و تایبەتمەندی ڕاپۆرتی خۆکار.",
             portfolio: "وێبسایتی پۆرتفۆلیۆی کەسی مۆدێرن کە پڕۆژەکان و تواناکان پیشان دەدات بە هەستاری ئاسان و دیزاینی وەڵامدەرەوە.",
+            kurdcutweb: "وێبسایتی فەرمی Kurd Cut، بەرنامەیەکی حجزکردن بۆ دەلاکخانەکان.",
         },
 
         contact: {

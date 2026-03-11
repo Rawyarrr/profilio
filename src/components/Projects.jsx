@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { FaGithub, FaExternalLinkAlt, FaArrowRight } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 import { useLanguage } from '../i18n/LanguageContext';
 
 const Projects = () => {
@@ -23,6 +23,16 @@ const Projects = () => {
         },
         {
             id: 2,
+            title: "Kurd Cut Web",
+            category: "Web",
+            descKey: "projects.kurdcutweb",
+            image: "/img/kurdcutweb.png",
+            techs: ["React", "Website", "Booking"],
+            links: { github: null, live: "https://kurdcut.vercel.app/" },
+            color: "#10b981"
+        },
+        {
+            id: 3,
             title: "Coffee shop Management System",
             category: "Desktop",
             descKey: "projects.coffeeShop",
@@ -32,7 +42,7 @@ const Projects = () => {
             color: "#06b6d4"
         },
         {
-            id: 3,
+            id: 4,
             title: "Institute Management System",
             category: "Web",
             descKey: "projects.institute",
@@ -42,7 +52,7 @@ const Projects = () => {
             color: "#3b82f6"
         },
         {
-            id: 4,
+            id: 5,
             title: "Weather Dashboard",
             category: "Web",
             descKey: "projects.weather",
@@ -52,7 +62,7 @@ const Projects = () => {
             color: "#f59e0b"
         },
         {
-            id: 5,
+            id: 6,
             title: "Supermarket Management System",
             category: "Desktop",
             descKey: "projects.supermarket",
@@ -62,7 +72,7 @@ const Projects = () => {
             color: "#ec4899"
         },
         {
-            id: 6,
+            id: 7,
             title: "Portfolio Website",
             category: "Web",
             descKey: "projects.portfolio",
@@ -92,11 +102,12 @@ const Projects = () => {
     };
 
     const cardVariants = {
-        hidden: { opacity: 0, y: 60 },
+        hidden: { opacity: 0, y: 30, scale: 0.98 },
         visible: {
             opacity: 1,
             y: 0,
-            transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
+            scale: 1,
+            transition: { duration: 0.8, ease: "easeOut" }
         }
     };
 
@@ -109,7 +120,8 @@ const Projects = () => {
                 ref={ref}
                 variants={containerVariants}
                 initial="hidden"
-                animate={isInView ? "visible" : "hidden"}
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.1 }}
                 className="max-w-6xl mx-auto px-6"
             >
                 {/* Section Header */}
